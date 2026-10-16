@@ -20,9 +20,11 @@
     overflow: hidden;
     font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
     background:
-      radial-gradient(ellipse 80% 50% at 15% 0%, rgba(90, 120, 220, .28), transparent 60%),
-      radial-gradient(ellipse 60% 40% at 90% 100%, rgba(255, 209, 102, .08), transparent 60%),
-      linear-gradient(160deg, #0b1c3a 0%, #122a55 55%, #17356b 100%);
+      radial-gradient(ellipse 80% 50% at 12% 0%, rgba(96, 110, 255, .30), transparent 60%),
+      radial-gradient(ellipse 55% 40% at 95% 35%, rgba(64, 200, 255, .14), transparent 65%),
+      radial-gradient(ellipse 70% 50% at 8% 100%, rgba(176, 106, 255, .16), transparent 60%),
+      radial-gradient(ellipse 50% 35% at 92% 100%, rgba(255, 209, 102, .10), transparent 60%),
+      linear-gradient(160deg, #0b1c3a 0%, #152a5e 55%, #1b2a63 100%);
     color: #f2f5fb;
     user-select: none;
     -webkit-user-select: none;
@@ -75,12 +77,16 @@
   .books button:hover { background: rgba(255,255,255,.14); }
 
   .books button.active {
-    background: #f2f5fb;
-    color: #122a55;
-    font-weight: 600;
     border-color: transparent;
     box-shadow: 0 6px 18px rgba(0,0,0,.3);
+    font-weight: 600;
   }
+
+  /* 每册一个主题色 */
+  .books button.active[data-book="nce1"] { background: linear-gradient(135deg, #ffd166, #f5be4f); color: #3a2c05; }
+  .books button.active[data-book="nce2"] { background: linear-gradient(135deg, #8bf0b0, #4fd68a); color: #0b3a20; }
+  .books button.active[data-book="nce3"] { background: linear-gradient(135deg, #8fd0ff, #5aa8f5); color: #0b2a4a; }
+  .books button.active[data-book="nce4"] { background: linear-gradient(135deg, #dcb0ff, #b678f0); color: #33104d; }
 
   .controls {
     display: flex;
@@ -263,8 +269,9 @@
   }
 
   .phonetic {
-    font-size: 17px;
-    opacity: .6;
+    font-size: 18px;
+    opacity: .9;
+    color: #9fc1ff;
     letter-spacing: 1px;
     animation: fadeIn .35s cubic-bezier(.22,.9,.3,1);
   }
@@ -322,19 +329,22 @@
 
   .card-actions {
     display: flex;
-    gap: 16px;
+    gap: 12px;
     margin-top: 2px;
+    opacity: .5;
+    transition: opacity .2s;
   }
+
+  .card-actions:hover { opacity: 1; }
 
   .action-btn {
     border: 1px solid rgba(255,255,255,.16);
-    background: rgba(255,255,255,.06);
-    color: rgba(242,245,251,.9);
-    border-radius: 16px;
-    padding: 14px 24px;
-    min-width: 128px;
-    min-height: 52px;
-    font-size: 17px;
+    background: rgba(255,255,255,.04);
+    color: rgba(242,245,251,.85);
+    border-radius: 999px;
+    padding: 8px 16px;
+    min-height: 40px;
+    font-size: 13px;
     cursor: pointer;
     transition: all .25s cubic-bezier(.22,.9,.3,1);
     font-family: inherit;
@@ -349,6 +359,16 @@
     border-color: transparent;
     font-weight: 600;
     box-shadow: 0 4px 14px rgba(255,209,102,.25);
+    opacity: 1;
+  }
+
+  /* 拼写模式的「确定」按钮保持醒目 */
+  #spellSubmit {
+    min-width: 128px;
+    min-height: 52px;
+    padding: 14px 24px;
+    border-radius: 16px;
+    font-size: 17px;
   }
 
   .hint {
@@ -390,9 +410,9 @@
     display: block;
     height: 100%;
     width: 0;
-    background: linear-gradient(90deg, #f5be4f, #ffd166);
+    background: linear-gradient(90deg, #4fd68a, #5aa8f5, #ffd166);
     border-radius: 999px;
-    box-shadow: 0 0 10px rgba(255,209,102,.5);
+    box-shadow: 0 0 10px rgba(120,180,255,.5);
     transition: width .3s cubic-bezier(.22,.9,.3,1);
   }
 
@@ -463,11 +483,11 @@
         <div class="spell-feedback" id="spellFeedback"></div>
         <button class="action-btn" id="spellSubmit">确定</button>
       </div>
+      <div class="hint" id="hint"></div>
       <div class="card-actions" id="cardActions">
         <button class="action-btn" id="hardBtn">☆ 生词</button>
         <button class="action-btn" id="masteredBtn">✓ 已掌握</button>
       </div>
-      <div class="hint" id="hint"></div>
     </div>
   </main>
 
