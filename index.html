@@ -36,12 +36,12 @@
 
   header {
     width: 100%;
-    padding: 20px 24px 8px;
+    padding: 16px 16px 6px;
     text-align: center;
   }
 
   header h1 {
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 600;
     letter-spacing: 2px;
     opacity: .9;
@@ -51,7 +51,7 @@
     display: flex;
     gap: 10px;
     justify-content: center;
-    padding: 14px 0 4px;
+    padding: 12px 0 2px;
     flex-wrap: wrap;
   }
 
@@ -80,23 +80,27 @@
     display: flex;
     gap: 10px;
     justify-content: center;
-    padding: 10px 0 4px;
+    padding: 10px 0 2px;
     flex-wrap: wrap;
   }
 
-  .controls button {
+  .controls button, .controls select {
     border: 1px solid rgba(255,255,255,.3);
     background: rgba(255,255,255,.08);
     color: #fff;
-    padding: 10px 18px;
+    padding: 10px 16px;
     min-height: 44px;
     border-radius: 999px;
     font-size: 15px;
     cursor: pointer;
     transition: all .2s;
+    font-family: inherit;
   }
 
-  .controls button:hover { background: rgba(255,255,255,.2); }
+  .controls select { max-width: 46vw; }
+  .controls select option { color: #1e3c72; }
+
+  .controls button:hover, .controls select:hover { background: rgba(255,255,255,.2); }
 
   .controls button.active {
     background: #ffd166;
@@ -107,34 +111,6 @@
 
   .controls button:disabled { opacity: .35; cursor: default; }
 
-  .card-actions {
-    display: flex;
-    gap: 16px;
-    margin-top: 4px;
-  }
-
-  .action-btn {
-    border: 1px solid rgba(255,255,255,.3);
-    background: rgba(255,255,255,.08);
-    color: #fff;
-    border-radius: 14px;
-    padding: 14px 24px;
-    min-width: 128px;
-    min-height: 52px;
-    font-size: 17px;
-    cursor: pointer;
-    transition: all .2s;
-  }
-
-  .action-btn:hover { background: rgba(255,255,255,.2); }
-
-  .action-btn.active {
-    background: #ffd166;
-    color: #1e3c72;
-    border-color: #ffd166;
-    font-weight: 600;
-  }
-
   main {
     flex: 1;
     width: 100%;
@@ -142,10 +118,11 @@
     align-items: center;
     justify-content: center;
     padding: 12px;
+    min-height: 0;
   }
 
   .card {
-    width: min(560px, 88vw);
+    width: min(560px, 92vw);
     min-height: 300px;
     background: rgba(255,255,255,.1);
     border: 1px solid rgba(255,255,255,.25);
@@ -155,8 +132,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 18px;
-    padding: 40px 32px;
+    gap: 16px;
+    padding: 36px 28px;
     cursor: pointer;
     transition: transform .15s, background .3s;
   }
@@ -175,14 +152,14 @@
   }
 
   .zh {
-    font-size: clamp(24px, 5vw, 38px);
+    font-size: clamp(22px, 5vw, 36px);
     font-weight: 600;
     text-align: center;
     line-height: 1.5;
   }
 
   .en-area {
-    min-height: 96px;
+    min-height: 90px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -191,7 +168,7 @@
   }
 
   .en {
-    font-size: clamp(30px, 6vw, 46px);
+    font-size: clamp(28px, 6vw, 44px);
     font-weight: 700;
     color: #ffd166;
     letter-spacing: 1px;
@@ -223,14 +200,73 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  .spell-area {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .spell-area input {
+    width: min(360px, 84%);
+    padding: 14px 16px;
+    font-size: 22px;
+    text-align: center;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.4);
+    background: rgba(255,255,255,.12);
+    color: #fff;
+    outline: none;
+    font-family: inherit;
+  }
+
+  .spell-area input::placeholder { color: rgba(255,255,255,.4); }
+  .spell-area input:focus { border-color: #ffd166; }
+
+  .spell-feedback { min-height: 28px; font-size: 17px; text-align: center; line-height: 1.5; }
+  .spell-feedback.ok { color: #7bf1a8; }
+  .spell-feedback.bad { color: #ffb3ab; }
+  .spell-feedback b { color: #ffd166; }
+
+  .card-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 2px;
+  }
+
+  .action-btn {
+    border: 1px solid rgba(255,255,255,.3);
+    background: rgba(255,255,255,.08);
+    color: #fff;
+    border-radius: 14px;
+    padding: 14px 24px;
+    min-width: 128px;
+    min-height: 52px;
+    font-size: 17px;
+    cursor: pointer;
+    transition: all .2s;
+    font-family: inherit;
+  }
+
+  .action-btn:hover { background: rgba(255,255,255,.2); }
+
+  .action-btn.active {
+    background: #ffd166;
+    color: #1e3c72;
+    border-color: #ffd166;
+    font-weight: 600;
+  }
+
   .hint {
     font-size: 13px;
     opacity: .45;
+    text-align: center;
   }
 
   footer {
     width: 100%;
-    padding: 10px 24px 22px;
+    padding: 8px 24px 20px;
     text-align: center;
   }
 
@@ -240,10 +276,17 @@
     letter-spacing: 1px;
   }
 
+  .seen {
+    font-size: 12px;
+    opacity: .5;
+    margin-top: 4px;
+    min-height: 15px;
+  }
+
   .bar {
     width: min(560px, 88vw);
     height: 4px;
-    margin: 10px auto 0;
+    margin: 8px auto 0;
     background: rgba(255,255,255,.15);
     border-radius: 2px;
     overflow: hidden;
@@ -257,12 +300,6 @@
     border-radius: 2px;
     transition: width .2s;
   }
-
-  .tips {
-    margin-top: 10px;
-    font-size: 12px;
-    opacity: .45;
-  }
 </style>
 </head>
 <body>
@@ -275,9 +312,11 @@
       <button data-book="nce4">第四册</button>
     </div>
     <div class="controls">
+      <select id="lessonSel" title="按课学习"></select>
       <button id="orderBtn" title="切换乱序 / 顺序"></button>
-      <button id="hardOnlyBtn" title="只显示标记过的生词"></button>
+      <button id="hardOnlyBtn" title="生词复习（按 1/3/7 天间隔出现）"></button>
       <button id="restoreBtn" title="把本册已掌握的单词加回来"></button>
+      <button id="spellBtn" title="拼写测试模式">📝 拼写</button>
     </div>
   </header>
 
@@ -285,33 +324,48 @@
     <div class="card" id="card">
       <div class="zh" id="zh"></div>
       <div class="en-area" id="enArea"></div>
+      <div class="spell-area" id="spellArea">
+        <input type="text" id="spellInput" placeholder="输入英文单词"
+               autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+        <div class="spell-feedback" id="spellFeedback"></div>
+        <button class="action-btn" id="spellSubmit">确定</button>
+      </div>
       <div class="card-actions" id="cardActions">
         <button class="action-btn" id="hardBtn">☆ 生词</button>
         <button class="action-btn" id="masteredBtn">✓ 已掌握</button>
       </div>
-      <div class="hint">点击卡片显示英文 · 滚轮 / 滑动切换单词</div>
+      <div class="hint" id="hint"></div>
     </div>
   </main>
 
   <footer>
     <div class="progress" id="progress"></div>
+    <div class="seen" id="seenInfo"></div>
     <div class="bar"><i id="barFill"></i></div>
-    <div class="tips">滚轮 / 滑动：切换单词 &nbsp;·&nbsp; 点击 / 轻点卡片：显示或隐藏英文（翻开自动朗读，点 🔊 重听）</div>
   </footer>
 
   <script src="data/words.js"></script>
   <script>
     const BOOK_NAMES = { nce1: "第一册", nce2: "第二册", nce3: "第三册", nce4: "第四册" };
+    const DAY_MS = 86400000;
+    const INTERVALS = [1, 3, 7]; // 艾宾浩斯简易间隔（天）
 
-    // 把按课组织的原始数据摊平成单词列表（保留 id 用于进度和标记）
+    // 把按课组织的原始数据摊平（保留 id 和 lessonId），同时记录课文列表
     const BOOKS = {};
+    const LESSONS = {};
     const RAW = window.NCE_WORDS_RAW || {};
     for (const key of Object.keys(RAW)) {
       const list = [];
-      for (const lesson of (RAW[key] && RAW[key].lessons) || []) {
+      const lessons = (RAW[key] && RAW[key].lessons) || [];
+      LESSONS[key] = lessons.map(l => ({
+        lessonId: l.lessonId,
+        label: `第${parseInt(l.lessonNumber, 10)}课` + (l.titleEn ? ` ${l.titleEn}` : (l.titleCn ? ` ${l.titleCn}` : ""))
+      }));
+      for (const lesson of lessons) {
         for (const w of lesson.words || []) {
           list.push({
             id: w.id,
+            lessonId: lesson.lessonId,
             en: w.word,
             cn: (w.pos ? w.pos + " " : "") + (w.meaning || ""),
             phonetic: Array.isArray(w.phonetic) ? w.phonetic.join(" / ") : (w.phonetic || "")
@@ -333,18 +387,28 @@
     };
 
     let book = "nce1";
+    let lessonId = "all";
     let orderMode = store.get("nce.order", "shuffle"); // shuffle | seq
     let hardOnly = store.get("nce.hardOnly", false);
-    const hardSets = {};
-    const masteredSets = {};
+    let spellMode = store.get("nce.spellMode", false);
+    const hardSets = {};     // book -> { id: { level, ts } }
+    const masteredSets = {}; // book -> Set(id)
+    const seenSets = {};     // book -> { id: count }
     let words = [];
     let index = 0;
     let revealed = false;
+    let spellWaitingNext = false;
 
     const cardEl = document.getElementById("card");
     const zhEl = document.getElementById("zh");
     const enAreaEl = document.getElementById("enArea");
+    const spellAreaEl = document.getElementById("spellArea");
+    const spellInput = document.getElementById("spellInput");
+    const spellFeedback = document.getElementById("spellFeedback");
+    const spellSubmit = document.getElementById("spellSubmit");
+    const hintEl = document.getElementById("hint");
     const progressEl = document.getElementById("progress");
+    const seenInfoEl = document.getElementById("seenInfo");
     const barFillEl = document.getElementById("barFill");
     const cardActionsEl = document.getElementById("cardActions");
     const hardBtn = document.getElementById("hardBtn");
@@ -352,20 +416,46 @@
     const orderBtn = document.getElementById("orderBtn");
     const hardOnlyBtn = document.getElementById("hardOnlyBtn");
     const restoreBtn = document.getElementById("restoreBtn");
+    const spellBtn = document.getElementById("spellBtn");
+    const lessonSel = document.getElementById("lessonSel");
 
+    // 生词本：{ id: {level, ts} }；旧格式（数组）自动迁移
     function hardSet(b) {
-      if (!hardSets[b]) hardSets[b] = new Set(store.get("nce.hard." + b, []));
+      if (!hardSets[b]) {
+        const raw = store.get("nce.hard." + b, {});
+        hardSets[b] = Array.isArray(raw)
+          ? Object.fromEntries(raw.map(id => [id, { level: 0, ts: 0 }]))
+          : raw;
+      }
       return hardSets[b];
     }
     function masteredSet(b) {
       if (!masteredSets[b]) masteredSets[b] = new Set(store.get("nce.mastered." + b, []));
       return masteredSets[b];
     }
-    function saveHard() { store.set("nce.hard." + book, [...hardSet(book)]); }
+    function seenSet(b) {
+      if (!seenSets[b]) seenSets[b] = store.get("nce.seen." + b, {});
+      return seenSets[b];
+    }
+    function saveHard() { store.set("nce.hard." + book, hardSet(book)); }
     function saveMastered() { store.set("nce.mastered." + book, [...masteredSet(book)]); }
+    function saveSeen() { store.set("nce.seen." + book, seenSet(book)); }
     function savePos() {
       const w = words[index];
       if (w) store.set("nce.pos." + book, w.id);
+    }
+    function bumpSeen(id) {
+      const s = seenSet(book);
+      s[id] = (s[id] || 0) + 1;
+      saveSeen();
+    }
+    function isDue(e) {
+      if (!e || e.ts === 0) return true;
+      return Date.now() - e.ts >= INTERVALS[Math.min(e.level, INTERVALS.length - 1)] * DAY_MS;
+    }
+    function dueCount() {
+      const h = hardSet(book);
+      return Object.values(h).filter(isDue).length;
     }
 
     function shuffle(arr) {
@@ -377,14 +467,15 @@
       return a;
     }
 
-    // 按当前设置（已掌握过滤 + 生词模式 + 乱/顺序）生成单词列表
+    // 按当前设置（课文 + 已掌握过滤 + 生词复习 + 乱/顺序）生成单词列表
     function buildWords() {
-      const base = BOOKS[book] || [];
+      let list = BOOKS[book] || [];
+      if (lessonId !== "all") list = list.filter(w => w.lessonId === lessonId);
       const m = masteredSet(book);
-      let list = base.filter(w => !m.has(w.id));
+      list = list.filter(w => !m.has(w.id));
       if (hardOnly) {
         const h = hardSet(book);
-        list = list.filter(w => h.has(w.id));
+        list = list.filter(w => h[w.id] && isDue(h[w.id]));
       }
       return orderMode === "shuffle" ? shuffle(list) : list;
     }
@@ -400,22 +491,35 @@
       updateControls();
     }
 
+    function fillLessons() {
+      lessonSel.innerHTML = `<option value="all">📚 全部课文</option>` +
+        (LESSONS[book] || []).map(l =>
+          `<option value="${l.lessonId}">${escapeHtml(l.label)}</option>`).join("");
+      lessonSel.value = lessonId;
+    }
+
     function loadBook(name) {
       book = name;
+      lessonId = store.get("nce.lesson." + book, "all");
       document.querySelectorAll("#books button").forEach(btn => {
         btn.classList.toggle("active", btn.dataset.book === name);
       });
+      fillLessons();
       index = 0;
       rebuild(store.get("nce.pos." + book, null));
     }
 
     function emptyMessage() {
       const total = (BOOKS[book] || []).length;
-      if (hardOnly && hardSet(book).size === 0)
-        return "还没有生词\n点卡片上的「☆ 生词」把难词加进来";
-      if (hardOnly) return "生词全部掌握了 🎉";
+      if (hardOnly) {
+        if (Object.keys(hardSet(book)).length === 0)
+          return "还没有生词\n点「☆ 生词」或拼写答错会自动加入";
+        return "今天该复习的生词都完成啦 🎉\n没到复习时间的会自动出现";
+      }
       if (total > 0 && masteredSet(book).size >= total)
         return "本册单词已全部掌握 🎉\n点上方「恢复已掌握」可重新来过";
+      if (lessonId !== "all")
+        return "本课没有可显示的单词\n（可能都已标记为已掌握）";
       return "本册暂无单词数据";
     }
 
@@ -423,20 +527,45 @@
       const w = words[index];
       if (!w) {
         zhEl.innerHTML = escapeHtml(emptyMessage()).replace(/\n/g, "<br>");
-        zhEl.style.fontSize = "20px";
+        zhEl.style.fontSize = "19px";
         enAreaEl.innerHTML = "";
+        resetSpell();
         cardActionsEl.style.visibility = "hidden";
+        spellAreaEl.style.display = "none";
         progressEl.textContent = "";
+        seenInfoEl.textContent = "";
         barFillEl.style.width = "0";
         return;
       }
       zhEl.style.fontSize = "";
       zhEl.textContent = w.cn;
-      renderEn(w);
       updateActionButtons(w);
-      cardActionsEl.style.visibility = "visible";
-      const modeTag = hardOnly ? "生词模式 · " : "";
-      progressEl.textContent = `${modeTag}新概念英语${BOOK_NAMES[book]} · 第 ${index + 1} / ${words.length} 词`;
+      updateSeen(w);
+      cardActionsEl.style.visibility = spellMode ? "hidden" : "visible";
+
+      if (spellMode) {
+        enAreaEl.style.display = "none";
+        spellAreaEl.style.display = "flex";
+        resetSpell();
+      } else {
+        spellAreaEl.style.display = "none";
+        enAreaEl.style.display = "flex";
+        renderEn(w);
+      }
+      hintEl.textContent = spellMode
+        ? "输入英文后按回车 · 滚轮 / 滑动切换单词"
+        : "点击卡片显示英文 · 滚轮 / 滑动切换单词";
+
+      const tags = [];
+      if (hardOnly) tags.push("生词复习");
+      if (spellMode) tags.push("拼写测试");
+      if (lessonId !== "all") {
+        const l = (LESSONS[book] || []).find(x => x.lessonId === lessonId);
+        if (l) tags.push(l.label.split(" ")[0]);
+      }
+      progressEl.textContent =
+        (tags.length ? tags.join(" · ") + " · " : "") +
+        `新概念英语${BOOK_NAMES[book]} · 第 ${index + 1} / ${words.length} 词`;
       barFillEl.style.width = ((index + 1) / words.length * 100) + "%";
       savePos();
 
@@ -447,19 +576,26 @@
       }
     }
 
+    function updateSeen(w) {
+      seenInfoEl.textContent = `此单词已背过 ${seenSet(book)[w.id] || 0} 遍`;
+    }
+
     function updateActionButtons(w) {
-      const isHard = hardSet(book).has(w.id);
+      const isHard = !!hardSet(book)[w.id];
       hardBtn.classList.toggle("active", isHard);
       hardBtn.textContent = isHard ? "⭐ 生词" : "☆ 生词";
+      masteredBtn.textContent = hardOnly ? "✓ 记住了" : "✓ 已掌握";
     }
 
     function updateControls() {
       orderBtn.textContent = orderMode === "shuffle" ? "🔀 乱序" : "📖 顺序";
-      hardOnlyBtn.textContent = `⭐ 只考生词 (${hardSet(book).size})`;
+      const total = Object.keys(hardSet(book)).length;
+      hardOnlyBtn.textContent = `⭐ 生词复习 (${dueCount()}/${total})`;
       hardOnlyBtn.classList.toggle("active", hardOnly);
       const m = masteredSet(book).size;
       restoreBtn.textContent = `♻️ 恢复已掌握 (${m})`;
       restoreBtn.disabled = m === 0;
+      spellBtn.classList.toggle("active", spellMode);
     }
 
     function speak(text) {
@@ -492,10 +628,16 @@
     }
 
     function toggleReveal() {
-      if (!words[index]) return;
+      if (spellMode) return;
+      const w = words[index];
+      if (!w) return;
       revealed = !revealed;
-      renderEn(words[index]);
-      if (revealed) speak(words[index].en);
+      renderEn(w);
+      if (revealed) {
+        speak(w.en);
+        bumpSeen(w.id);
+        updateSeen(w);
+      }
     }
 
     function go(delta, direction) {
@@ -506,15 +648,71 @@
       render(direction);
     }
 
+    // ---- 拼写测试 ----
+    function resetSpell() {
+      spellWaitingNext = false;
+      spellInput.disabled = false;
+      spellInput.value = "";
+      spellFeedback.textContent = "";
+      spellFeedback.className = "spell-feedback";
+      spellSubmit.textContent = "确定";
+      // 桌面端自动聚焦；手机端不弹键盘，需要时点一下输入框
+      if (spellMode && window.matchMedia("(pointer: fine)").matches) spellInput.focus();
+    }
+
+    function norm(s) {
+      return String(s).trim().toLowerCase().replace(/\s+/g, " ");
+    }
+
+    function spellAction() {
+      const w = words[index];
+      if (!w) return;
+      if (spellWaitingNext) {
+        spellWaitingNext = false;
+        go(1, "next");
+        return;
+      }
+      const ans = norm(spellInput.value);
+      if (!ans) return;
+      if (ans === norm(w.en)) {
+        spellFeedback.className = "spell-feedback ok";
+        spellFeedback.textContent = "✓ 正确！";
+        bumpSeen(w.id);
+        updateSeen(w);
+        speak(w.en);
+        spellInput.disabled = true;
+        const wid = w.id;
+        setTimeout(() => {
+          if (words[index] && words[index].id === wid && !spellWaitingNext) go(1, "next");
+        }, 900);
+      } else {
+        spellFeedback.className = "spell-feedback bad";
+        spellFeedback.innerHTML = `✗ 正确答案：<b>${escapeHtml(w.en)}</b>（已加入生词）`;
+        const h = hardSet(book);
+        if (!h[w.id]) { h[w.id] = { level: 0, ts: 0 }; saveHard(); updateControls(); }
+        speak(w.en);
+        spellInput.disabled = true;
+        spellSubmit.textContent = "继续";
+        spellWaitingNext = true;
+      }
+    }
+
+    spellSubmit.addEventListener("click", e => { e.stopPropagation(); spellAction(); });
+    spellInput.addEventListener("click", e => e.stopPropagation());
+    spellInput.addEventListener("keydown", e => {
+      e.stopPropagation();
+      if (e.key === "Enter") { e.preventDefault(); spellAction(); }
+    });
+
     // ---- 标记操作 ----
     hardBtn.addEventListener("click", e => {
       e.stopPropagation();
       const w = words[index];
       if (!w) return;
       const h = hardSet(book);
-      if (h.has(w.id)) h.delete(w.id); else h.add(w.id);
+      if (h[w.id]) delete h[w.id]; else h[w.id] = { level: 0, ts: 0 };
       saveHard();
-      if (hardOnly && !h.has(w.id)) rebuild(w.id); // 生词模式下取消标记，当前词移出列表
+      if (hardOnly && !h[w.id]) rebuild(w.id); // 生词复习中取消标记，当前词移出列表
       else { render(); updateControls(); }
     });
 
@@ -522,9 +720,21 @@
       e.stopPropagation();
       const w = words[index];
       if (!w) return;
-      masteredSet(book).add(w.id);
-      saveMastered();
-      rebuild(w.id); // 当前词被移出，自动显示下一个
+      if (hardOnly) {
+        // 生词复习：记住了 → 间隔延长（1天→3天→7天→毕业）
+        const h = hardSet(book);
+        const entry = h[w.id];
+        if (entry) {
+          if (entry.level >= INTERVALS.length - 1) delete h[w.id]; // 完成 7 天复习，毕业
+          else { entry.level += 1; entry.ts = Date.now(); }
+          saveHard();
+        }
+        rebuild(w.id);
+      } else {
+        masteredSet(book).add(w.id);
+        saveMastered();
+        rebuild(w.id); // 当前词被移出，自动显示下一个
+      }
     });
 
     orderBtn.addEventListener("click", () => {
@@ -548,6 +758,21 @@
       rebuild(words[index] && words[index].id);
     });
 
+    spellBtn.addEventListener("click", () => {
+      spellMode = !spellMode;
+      store.set("nce.spellMode", spellMode);
+      revealed = false;
+      render();
+      updateControls();
+    });
+
+    lessonSel.addEventListener("change", () => {
+      lessonId = lessonSel.value;
+      store.set("nce.lesson." + book, lessonId);
+      index = 0;
+      rebuild(words[index] && words[index].id);
+    });
+
     // 滚轮翻词（加节流，防止一次滚动跳多个）
     let wheelLock = false;
     window.addEventListener("wheel", e => {
@@ -558,12 +783,13 @@
       go(e.deltaY > 0 ? 1 : -1, e.deltaY > 0 ? "next" : "prev");
     }, { passive: true });
 
-    // 点击卡片：显示 / 隐藏英文（滑动后的 click 不触发）
-    cardEl.addEventListener("click", () => { if (!swiped) toggleReveal(); });
+    // 点击卡片：显示 / 隐藏英文（滑动后的 click 不触发；拼写模式下不翻卡）
+    cardEl.addEventListener("click", () => { if (!swiped && !spellMode) toggleReveal(); });
 
     // 键盘支持
     window.addEventListener("keydown", e => {
-      if (e.key === " " || e.key === "Enter") { e.preventDefault(); toggleReveal(); }
+      if (e.target === spellInput) return; // 输入框有自己的按键处理
+      if (e.key === " " || e.key === "Enter") { e.preventDefault(); if (!spellMode) toggleReveal(); }
       else if (e.key === "ArrowDown" || e.key === "ArrowRight" || e.key === "PageDown") { go(1, "next"); }
       else if (e.key === "ArrowUp" || e.key === "ArrowLeft" || e.key === "PageUp") { go(-1, "prev"); }
     });
