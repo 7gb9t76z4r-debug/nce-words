@@ -314,6 +314,7 @@
     <div class="controls">
       <select id="lessonSel" title="按课学习"></select>
       <button id="orderBtn" title="切换乱序 / 顺序"></button>
+      <button id="shuffleBtn" title="重新打乱当前单词顺序">🎲 打乱</button>
       <button id="hardOnlyBtn" title="生词复习（按 1/3/7 天间隔出现）"></button>
       <button id="restoreBtn" title="把本册已掌握的单词加回来"></button>
       <button id="spellBtn" title="拼写测试模式">📝 拼写</button>
@@ -739,6 +740,12 @@
 
     orderBtn.addEventListener("click", () => {
       orderMode = orderMode === "shuffle" ? "seq" : "shuffle";
+      store.set("nce.order", orderMode);
+      rebuild(words[index] && words[index].id);
+    });
+
+    document.getElementById("shuffleBtn").addEventListener("click", () => {
+      orderMode = "shuffle";
       store.set("nce.order", orderMode);
       rebuild(words[index] && words[index].id);
     });
