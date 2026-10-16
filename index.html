@@ -694,13 +694,29 @@
       spellBtn.classList.toggle("active", spellMode);
     }
 
-    function speak(text) {
+    // ---- 朗读：优先系统语音，无英文语音时用在线真人发音兜底 ----
+    let voices = [];
+    function loadVoices() {
       if (!window.speechSynthesis) return;
-      speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = "en-US";
-      u.rate = 0.85;
-      speechSynthesis.speak(u);
+      voices = speechSynthesis.getVoices();
+    }
+    loadVoices();
+    if (window.speechSynthesis) speechSynthesis.onvoiceschanged = loadVoices;
+
+    function speak(text) {
+      const enVoice = voices.find(v => /^en([_-]|$)/i.test(v.lang));
+      if (window.speechSynthesis && enVoice) {
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = enVoice.lang;
+        u.voice = enVoice;
+        u.rate = 0.85;
+        speechSynthesis.cancel();
+        setTimeout(() => speechSynthesis.speak(u), 60); // 兼容 iOS：cancel 后稍延迟再播
+      } else {
+        // 无系统英文语音（部分手机）：用在线词典真人发音
+        const audio = new Audio("https://mp3.91dict.com/word/" + encodeURIComponent(text) + "_a.mp3");
+        audio.play().catch(() => {});
+      }
     }
 
     function renderEn(w) {
