@@ -111,6 +111,62 @@
 
   .controls button:disabled { opacity: .35; cursor: default; }
 
+  .backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s;
+    z-index: 20;
+  }
+
+  .backdrop.open { opacity: 1; pointer-events: auto; }
+
+  .drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(300px, 82vw);
+    height: 100%;
+    background: rgba(18, 38, 74, .98);
+    border-left: 1px solid rgba(255,255,255,.2);
+    padding: 22px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transform: translateX(100%);
+    transition: transform .25s ease;
+    z-index: 30;
+  }
+
+  .drawer.open { transform: translateX(0); }
+
+  .drawer button {
+    border: 1px solid rgba(255,255,255,.3);
+    background: rgba(255,255,255,.08);
+    color: #fff;
+    padding: 14px 18px;
+    min-height: 52px;
+    border-radius: 14px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: all .2s;
+  }
+
+  .drawer button:hover { background: rgba(255,255,255,.2); }
+
+  .drawer button.active {
+    background: #ffd166;
+    color: #1e3c72;
+    border-color: #ffd166;
+    font-weight: 600;
+  }
+
+  .drawer button:disabled { opacity: .35; cursor: default; }
+
   main {
     flex: 1;
     width: 100%;
@@ -313,14 +369,19 @@
     </div>
     <div class="controls">
       <select id="lessonSel" title="按课学习"></select>
-      <button id="orderBtn" title="切换乱序 / 顺序"></button>
-      <button id="shuffleBtn" title="重新打乱当前单词顺序">🎲 打乱</button>
-      <button id="restartBtn" title="从第一个单词重新开始">🔁 重头开始</button>
-      <button id="hardOnlyBtn" title="生词复习（按 1/3/7 天间隔出现）"></button>
-      <button id="restoreBtn" title="把本册已掌握的单词加回来"></button>
-      <button id="spellBtn" title="拼写测试模式">📝 拼写</button>
+      <button id="menuBtn" title="更多功能">☰ 菜单</button>
     </div>
   </header>
+
+  <div class="backdrop" id="backdrop"></div>
+  <div class="drawer" id="drawer">
+    <button id="spellBtn" title="拼写测试模式">📝 拼写测试</button>
+    <button id="hardOnlyBtn" title="生词复习（按 1/3/7 天间隔出现）"></button>
+    <button id="orderBtn" title="切换乱序 / 顺序"></button>
+    <button id="shuffleBtn" title="重新打乱当前单词顺序">🎲 打乱</button>
+    <button id="restartBtn" title="从第一个单词重新开始">🔁 重头开始</button>
+    <button id="restoreBtn" title="把本册已掌握的单词加回来"></button>
+  </div>
 
   <main>
     <div class="card" id="card">
@@ -786,6 +847,19 @@
       rebuild(words[index] && words[index].id);
     });
 
+    // ---- 侧边抽屉菜单 ----
+    const drawerEl = document.getElementById("drawer");
+    const backdropEl = document.getElementById("backdrop");
+    function setDrawer(open) {
+      drawerEl.classList.toggle("open", open);
+      backdropEl.classList.toggle("open", open);
+    }
+    document.getElementById("menuBtn").addEventListener("click", () => setDrawer(true));
+    backdropEl.addEventListener("click", () => setDrawer(false));
+    drawerEl.addEventListener("click", e => {
+      if (e.target.closest("button")) setTimeout(() => setDrawer(false), 180);
+    });
+
     // 滚轮翻词（加节流，防止一次滚动跳多个）
     let wheelLock = false;
     window.addEventListener("wheel", e => {
@@ -808,14 +882,16 @@
     });
 
     // 触屏手势：上滑下一个，下滑上一个，左右滑也可以（轻点翻卡由 click 处理）
-    let touchStartX = 0, touchStartY = 0, swiped = false;
+    let touchStartX = 0, touchStartY = 0, swiped = false, gestureSkip = false;
     window.addEventListener("touchstart", e => {
       touchStartX = e.changedTouches[0].clientX;
       touchStartY = e.changedTouches[0].clientY;
       swiped = false;
+      gestureSkip = !!e.target.closest("#drawer, select, input");
     }, { passive: true });
 
     window.addEventListener("touchend", e => {
+      if (gestureSkip) return;
       const dx = e.changedTouches[0].clientX - touchStartX;
       const dy = e.changedTouches[0].clientY - touchStartY;
       if (Math.abs(dx) < 40 && Math.abs(dy) < 40) return; // 视为轻点，交给 click
