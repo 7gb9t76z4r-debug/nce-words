@@ -1,4 +1,4 @@
-const CACHE = "nce-words-v9";
+const CACHE = "nce-words-v10";
 const ASSETS = [
   ".",
   "index.html",

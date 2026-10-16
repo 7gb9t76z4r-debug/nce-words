@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#1e3c72">
+<meta name="theme-color" content="#0b1c3a">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,14 +18,18 @@
   html, body {
     height: 100%;
     overflow: hidden;
-    font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-    color: #fff;
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+    background:
+      radial-gradient(ellipse 80% 50% at 15% 0%, rgba(90, 120, 220, .28), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 100%, rgba(255, 209, 102, .08), transparent 60%),
+      linear-gradient(160deg, #0b1c3a 0%, #122a55 55%, #17356b 100%);
+    color: #f2f5fb;
     user-select: none;
     -webkit-user-select: none;
     touch-action: none;
     overscroll-behavior: none;
     -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
   }
 
   body {
@@ -36,15 +40,16 @@
 
   header {
     width: 100%;
-    padding: 16px 16px 6px;
+    padding: 20px 16px 6px;
     text-align: center;
   }
 
   header h1 {
-    font-size: 19px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    opacity: .9;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 6px;
+    text-indent: 6px;
+    opacity: .55;
   }
 
   .books {
@@ -56,24 +61,25 @@
   }
 
   .books button {
-    border: 1px solid rgba(255,255,255,.35);
-    background: rgba(255,255,255,.08);
-    color: #fff;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(255,255,255,.06);
+    color: rgba(242,245,251,.85);
     padding: 10px 22px;
     min-height: 44px;
     border-radius: 999px;
     font-size: 15px;
     cursor: pointer;
-    transition: all .2s;
+    transition: all .25s cubic-bezier(.22,.9,.3,1);
   }
 
-  .books button:hover { background: rgba(255,255,255,.2); }
+  .books button:hover { background: rgba(255,255,255,.14); }
 
   .books button.active {
-    background: #fff;
-    color: #1e3c72;
+    background: #f2f5fb;
+    color: #122a55;
     font-weight: 600;
-    border-color: #fff;
+    border-color: transparent;
+    box-shadow: 0 6px 18px rgba(0,0,0,.3);
   }
 
   .controls {
@@ -85,39 +91,40 @@
   }
 
   .controls button, .controls select {
-    border: 1px solid rgba(255,255,255,.3);
-    background: rgba(255,255,255,.08);
-    color: #fff;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(255,255,255,.06);
+    color: rgba(242,245,251,.85);
     padding: 10px 16px;
     min-height: 44px;
     border-radius: 999px;
     font-size: 15px;
     cursor: pointer;
-    transition: all .2s;
+    transition: all .25s cubic-bezier(.22,.9,.3,1);
     font-family: inherit;
   }
 
   .controls select { max-width: 46vw; }
-  .controls select option { color: #1e3c72; }
+  .controls select option { color: #122a55; }
 
-  .controls button:hover, .controls select:hover { background: rgba(255,255,255,.2); }
+  .controls button:hover, .controls select:hover { background: rgba(255,255,255,.14); }
 
   .controls button.active {
-    background: #ffd166;
-    color: #1e3c72;
-    border-color: #ffd166;
+    background: linear-gradient(135deg, #ffd166, #f5be4f);
+    color: #122a55;
+    border-color: transparent;
     font-weight: 600;
+    box-shadow: 0 4px 14px rgba(255,209,102,.25);
   }
 
-  .controls button:disabled { opacity: .35; cursor: default; }
+  .controls button:disabled { opacity: .3; cursor: default; }
 
   .backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,.35);
+    background: rgba(5,12,26,.45);
     opacity: 0;
     pointer-events: none;
-    transition: opacity .25s;
+    transition: opacity .3s;
     z-index: 20;
   }
 
@@ -129,23 +136,25 @@
     right: 0;
     width: min(300px, 82vw);
     height: 100%;
-    background: rgba(18, 38, 74, .98);
-    border-left: 1px solid rgba(255,255,255,.2);
-    padding: 22px 16px;
+    background: rgba(11, 26, 54, .88);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-left: 1px solid rgba(255,255,255,.12);
+    padding: 24px 16px;
     display: flex;
     flex-direction: column;
     gap: 12px;
     transform: translateX(100%);
-    transition: transform .25s ease;
+    transition: transform .3s cubic-bezier(.22,.9,.3,1);
     z-index: 30;
   }
 
   .drawer.open { transform: translateX(0); }
 
   .drawer button {
-    border: 1px solid rgba(255,255,255,.3);
-    background: rgba(255,255,255,.08);
-    color: #fff;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.06);
+    color: rgba(242,245,251,.9);
     padding: 14px 18px;
     min-height: 52px;
     border-radius: 14px;
@@ -153,19 +162,19 @@
     cursor: pointer;
     text-align: left;
     font-family: inherit;
-    transition: all .2s;
+    transition: all .25s cubic-bezier(.22,.9,.3,1);
   }
 
-  .drawer button:hover { background: rgba(255,255,255,.2); }
+  .drawer button:hover { background: rgba(255,255,255,.14); }
 
   .drawer button.active {
-    background: #ffd166;
-    color: #1e3c72;
-    border-color: #ffd166;
+    background: linear-gradient(135deg, #ffd166, #f5be4f);
+    color: #122a55;
+    border-color: transparent;
     font-weight: 600;
   }
 
-  .drawer button:disabled { opacity: .35; cursor: default; }
+  .drawer button:disabled { opacity: .3; cursor: default; }
 
   main {
     flex: 1;
@@ -181,25 +190,34 @@
   .card {
     width: min(560px, 92vw);
     min-height: 300px;
-    background: rgba(255,255,255,.1);
-    border: 1px solid rgba(255,255,255,.25);
-    border-radius: 20px;
-    backdrop-filter: blur(6px);
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 26px;
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    box-shadow:
+      0 24px 60px rgba(0,0,0,.35),
+      inset 0 1px 0 rgba(255,255,255,.12);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 16px;
-    padding: 36px 28px;
+    padding: 40px 28px;
     cursor: pointer;
-    transition: transform .15s, background .3s;
+    transition: background .3s, box-shadow .3s;
   }
 
-  .card:hover { background: rgba(255,255,255,.16); }
-  .card.slide-up   { animation: slideUp .25s ease; }
-  .card.slide-down { animation: slideDown .25s ease; }
+  .card:hover {
+    background: rgba(255,255,255,.11);
+    box-shadow:
+      0 28px 70px rgba(0,0,0,.4),
+      inset 0 1px 0 rgba(255,255,255,.16);
+  }
+  .card.slide-up   { animation: slideUp .3s cubic-bezier(.22,.9,.3,1); }
+  .card.slide-down { animation: slideDown .3s cubic-bezier(.22,.9,.3,1); }
 
-  .card.flip { animation: cardFlip .32s ease; }
+  .card.flip { animation: cardFlip .36s cubic-bezier(.22,.9,.3,1); }
 
   @keyframes cardFlip {
     0%     { transform: rotateY(0); }
@@ -218,10 +236,11 @@
   }
 
   .zh {
-    font-size: clamp(22px, 5vw, 36px);
+    font-size: clamp(22px, 5vw, 34px);
     font-weight: 600;
     text-align: center;
-    line-height: 1.5;
+    line-height: 1.6;
+    letter-spacing: 1px;
   }
 
   .en-area {
@@ -234,18 +253,20 @@
   }
 
   .en {
-    font-size: clamp(28px, 6vw, 44px);
+    font-size: clamp(30px, 6vw, 46px);
     font-weight: 700;
     color: #ffd166;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-align: center;
-    animation: fadeIn .3s ease;
+    text-shadow: 0 0 24px rgba(255,209,102,.25);
+    animation: fadeIn .35s cubic-bezier(.22,.9,.3,1);
   }
 
   .phonetic {
-    font-size: 18px;
-    opacity: .75;
-    animation: fadeIn .3s ease;
+    font-size: 17px;
+    opacity: .6;
+    letter-spacing: 1px;
+    animation: fadeIn .35s cubic-bezier(.22,.9,.3,1);
   }
 
   .speak-btn {
@@ -255,14 +276,14 @@
     cursor: pointer;
     vertical-align: middle;
     margin-left: 6px;
-    opacity: .8;
+    opacity: .7;
     transition: opacity .2s, transform .2s;
   }
 
   .speak-btn:hover { opacity: 1; transform: scale(1.15); }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
@@ -279,16 +300,20 @@
     padding: 14px 16px;
     font-size: 22px;
     text-align: center;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,.4);
-    background: rgba(255,255,255,.12);
-    color: #fff;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.2);
+    background: rgba(255,255,255,.07);
+    color: #f2f5fb;
     outline: none;
     font-family: inherit;
+    transition: border-color .25s, box-shadow .25s;
   }
 
-  .spell-area input::placeholder { color: rgba(255,255,255,.4); }
-  .spell-area input:focus { border-color: #ffd166; }
+  .spell-area input::placeholder { color: rgba(242,245,251,.35); }
+  .spell-area input:focus {
+    border-color: rgba(255,209,102,.7);
+    box-shadow: 0 0 0 3px rgba(255,209,102,.15);
+  }
 
   .spell-feedback { min-height: 28px; font-size: 17px; text-align: center; line-height: 1.5; }
   .spell-feedback.ok { color: #7bf1a8; }
@@ -302,32 +327,35 @@
   }
 
   .action-btn {
-    border: 1px solid rgba(255,255,255,.3);
-    background: rgba(255,255,255,.08);
-    color: #fff;
-    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(255,255,255,.06);
+    color: rgba(242,245,251,.9);
+    border-radius: 16px;
     padding: 14px 24px;
     min-width: 128px;
     min-height: 52px;
     font-size: 17px;
     cursor: pointer;
-    transition: all .2s;
+    transition: all .25s cubic-bezier(.22,.9,.3,1);
     font-family: inherit;
   }
 
-  .action-btn:hover { background: rgba(255,255,255,.2); }
+  .action-btn:hover { background: rgba(255,255,255,.14); }
+  .action-btn:active { transform: scale(.96); }
 
   .action-btn.active {
-    background: #ffd166;
-    color: #1e3c72;
-    border-color: #ffd166;
+    background: linear-gradient(135deg, #ffd166, #f5be4f);
+    color: #122a55;
+    border-color: transparent;
     font-weight: 600;
+    box-shadow: 0 4px 14px rgba(255,209,102,.25);
   }
 
   .hint {
-    font-size: 13px;
-    opacity: .45;
+    font-size: 12px;
+    opacity: .35;
     text-align: center;
+    letter-spacing: 1px;
   }
 
   footer {
@@ -337,24 +365,24 @@
   }
 
   .progress {
-    font-size: 14px;
-    opacity: .8;
+    font-size: 13px;
+    opacity: .65;
     letter-spacing: 1px;
   }
 
   .seen {
     font-size: 12px;
-    opacity: .5;
+    opacity: .4;
     margin-top: 4px;
     min-height: 15px;
   }
 
   .bar {
     width: min(560px, 88vw);
-    height: 4px;
+    height: 5px;
     margin: 8px auto 0;
-    background: rgba(255,255,255,.15);
-    border-radius: 2px;
+    background: rgba(255,255,255,.1);
+    border-radius: 999px;
     overflow: hidden;
   }
 
@@ -362,9 +390,10 @@
     display: block;
     height: 100%;
     width: 0;
-    background: #ffd166;
-    border-radius: 2px;
-    transition: width .2s;
+    background: linear-gradient(90deg, #f5be4f, #ffd166);
+    border-radius: 999px;
+    box-shadow: 0 0 10px rgba(255,209,102,.5);
+    transition: width .3s cubic-bezier(.22,.9,.3,1);
   }
 
   /* 手机端：页头页脚悬浮，卡片相对整个屏幕居中 */
@@ -376,8 +405,6 @@
       z-index: 10;
       padding-top: max(10px, env(safe-area-inset-top));
     }
-
-    header h1 { font-size: 16px; }
 
     .books { padding-top: 8px; gap: 8px; }
     .books button { padding: 8px 16px; font-size: 14px; }
