@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1e3c72">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NCE 背单词">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>新概念英语 · 背单词</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: #fff;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header {
+    width: 100%;
+    padding: 20px 24px 8px;
+    text-align: center;
+  }
+
+  header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    opacity: .9;
+  }
+
+  .books {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    padding: 14px 0 4px;
+    flex-wrap: wrap;
+  }
+
+  .books button {
+    border: 1px solid rgba(255,255,255,.35);
+    background: rgba(255,255,255,.08);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 999px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+
+  .books button:hover { background: rgba(255,255,255,.2); }
+
+  .books button.active {
+    background: #fff;
+    color: #1e3c72;
+    font-weight: 600;
+    border-color: #fff;
+  }
+
+  main {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+  }
+
+  .card {
+    width: min(560px, 88vw);
+    min-height: 300px;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 20px;
+    backdrop-filter: blur(6px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 40px 32px;
+    cursor: pointer;
+    transition: transform .15s, background .3s;
+  }
+
+  .card:hover { background: rgba(255,255,255,.16); }
+  .card.slide-up   { animation: slideUp .25s ease; }
+  .card.slide-down { animation: slideDown .25s ease; }
+
+  @keyframes slideUp {
+    from { transform: translateY(36px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+  @keyframes slideDown {
+    from { transform: translateY(-36px); opacity: 0; }
+    to   { transform: translateY(0);     opacity: 1; }
+  }
+
+  .zh {
+    font-size: clamp(24px, 5vw, 38px);
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .en-area {
+    min-height: 96px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .en {
+    font-size: clamp(30px, 6vw, 46px);
+    font-weight: 700;
+    color: #ffd166;
+    letter-spacing: 1px;
+    text-align: center;
+    animation: fadeIn .3s ease;
+  }
+
+  .phonetic {
+    font-size: 18px;
+    opacity: .75;
+    animation: fadeIn .3s ease;
+  }
+
+  .speak-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-left: 6px;
+    opacity: .8;
+    transition: opacity .2s, transform .2s;
+  }
+
+  .speak-btn:hover { opacity: 1; transform: scale(1.15); }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hint {
+    font-size: 13px;
+    opacity: .45;
+  }
+
+  footer {
+    width: 100%;
+    padding: 10px 24px 22px;
+    text-align: center;
+  }
+
+  .progress {
+    font-size: 14px;
+    opacity: .8;
+    letter-spacing: 1px;
+  }
+
+  .bar {
+    width: min(560px, 88vw);
+    height: 4px;
+    margin: 10px auto 0;
+    background: rgba(255,255,255,.15);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .bar i {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: #ffd166;
+    border-radius: 2px;
+    transition: width .2s;
+  }
+
+  .tips {
+    margin-top: 10px;
+    font-size: 12px;
+    opacity: .45;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>新概念英语 · 背单词</h1>
+    <div class="books" id="books">
+      <button data-book="nce1">第一册</button>
+      <button data-book="nce2">第二册</button>
+      <button data-book="nce3">第三册</button>
+      <button data-book="nce4">第四册</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="card" id="card">
+      <div class="zh" id="zh"></div>
+      <div class="en-area" id="enArea"></div>
+      <div class="hint">点击卡片显示英文 · 滚轮切换单词</div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="progress" id="progress"></div>
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="tips">滚轮 / 滑动：切换单词 &nbsp;·&nbsp; 点击 / 轻点卡片：显示或隐藏英文（翻开自动朗读，点 🔊 重听）</div>
+  </footer>
+
+  <script src="data/words.js"></script>
+  <script>
+    const BOOK_NAMES = { nce1: "第一册", nce2: "第二册", nce3: "第三册", nce4: "第四册" };
+
+    // 把按课组织的原始数据摊平成单词列表
+    const BOOKS = {};
+    const RAW = window.NCE_WORDS_RAW || {};
+    for (const key of Object.keys(RAW)) {
+      const list = [];
+      for (const lesson of (RAW[key] && RAW[key].lessons) || []) {
+        for (const w of lesson.words || []) {
+          list.push({
+            en: w.word,
+            cn: (w.pos ? w.pos + " " : "") + (w.meaning || ""),
+            phonetic: Array.isArray(w.phonetic) ? w.phonetic.join(" / ") : (w.phonetic || "")
+          });
+        }
+      }
+      BOOKS[key] = list;
+    }
+
+    let book = "nce1";
+    let words = [];
+    let index = 0;
+    let revealed = false;
+
+    const cardEl = document.getElementById("card");
+    const zhEl = document.getElementById("zh");
+    const enAreaEl = document.getElementById("enArea");
+    const progressEl = document.getElementById("progress");
+    const barFillEl = document.getElementById("barFill");
+
+    function shuffle(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function loadBook(name) {
+      book = name;
+      words = shuffle(BOOKS[name] || []);
+      index = 0;
+      revealed = false;
+      document.querySelectorAll("#books button").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.book === name);
+      });
+      render();
+    }
+
+    function render(direction) {
+      const w = words[index];
+      if (!w) {
+        zhEl.textContent = "本册暂无单词数据";
+        enAreaEl.innerHTML = "";
+        progressEl.textContent = "";
+        barFillEl.style.width = "0";
+        return;
+      }
+      zhEl.textContent = w.cn;
+      renderEn(w);
+      progressEl.textContent = `新概念英语${BOOK_NAMES[book]} · 第 ${index + 1} / ${words.length} 词`;
+      barFillEl.style.width = ((index + 1) / words.length * 100) + "%";
+
+      if (direction) {
+        cardEl.classList.remove("slide-up", "slide-down");
+        void cardEl.offsetWidth;
+        cardEl.classList.add(direction === "next" ? "slide-up" : "slide-down");
+      }
+    }
+
+    function speak(text) {
+      if (!window.speechSynthesis) return;
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = "en-US";
+      u.rate = 0.85;
+      speechSynthesis.speak(u);
+    }
+
+    function renderEn(w) {
+      if (revealed) {
+        enAreaEl.innerHTML =
+          `<div class="en">${escapeHtml(w.en)} <button class="speak-btn" id="speakBtn" title="朗读">🔊</button></div>` +
+          (w.phonetic ? `<div class="phonetic">${escapeHtml(w.phonetic)}</div>` : "");
+        document.getElementById("speakBtn").addEventListener("click", e => {
+          e.stopPropagation();
+          speak(w.en);
+        });
+      } else {
+        enAreaEl.innerHTML = `<div class="hint">？</div>`;
+      }
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[c]));
+    }
+
+    function toggleReveal() {
+      revealed = !revealed;
+      renderEn(words[index]);
+      if (revealed && words[index]) speak(words[index].en);
+    }
+
+    function go(delta, direction) {
+      const next = index + delta;
+      if (next < 0 || next >= words.length) return;
+      index = next;
+      revealed = false;
+      render(direction);
+    }
+
+    // 滚轮翻词（加节流，防止一次滚动跳多个）
+    let wheelLock = false;
+    window.addEventListener("wheel", e => {
+      if (wheelLock) return;
+      if (Math.abs(e.deltaY) < 10) return;
+      wheelLock = true;
+      setTimeout(() => wheelLock = false, 260);
+      go(e.deltaY > 0 ? 1 : -1, e.deltaY > 0 ? "next" : "prev");
+    }, { passive: true });
+
+    // 点击卡片：显示 / 隐藏英文（滑动后的 click 不触发）
+    cardEl.addEventListener("click", () => { if (!swiped) toggleReveal(); });
+
+    // 键盘支持
+    window.addEventListener("keydown", e => {
+      if (e.key === " " || e.key === "Enter") { e.preventDefault(); toggleReveal(); }
+      else if (e.key === "ArrowDown" || e.key === "ArrowRight" || e.key === "PageDown") { go(1, "next"); }
+      else if (e.key === "ArrowUp" || e.key === "ArrowLeft" || e.key === "PageUp") { go(-1, "prev"); }
+    });
+
+    // 触屏手势：上滑下一个，下滑上一个，左右滑也可以（轻点翻卡由 click 处理）
+    let touchStartX = 0, touchStartY = 0, swiped = false;
+    window.addEventListener("touchstart", e => {
+      touchStartX = e.changedTouches[0].clientX;
+      touchStartY = e.changedTouches[0].clientY;
+      swiped = false;
+    }, { passive: true });
+
+    window.addEventListener("touchend", e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) < 40 && Math.abs(dy) < 40) return; // 视为轻点，交给 click
+      swiped = true;
+      setTimeout(() => swiped = false, 350);
+      if (Math.abs(dy) >= Math.abs(dx)) go(dy < 0 ? 1 : -1, dy < 0 ? "next" : "prev");
+      else go(dx < 0 ? 1 : -1, dx < 0 ? "next" : "prev");
+    }, { passive: true });
+
+    // PWA：注册 Service Worker（https 或 localhost 下生效，离线可用）
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
+    }
+
+    document.getElementById("books").addEventListener("click", e => {
+      const btn = e.target.closest("button[data-book]");
+      if (btn) loadBook(btn.dataset.book);
+    });
+
+    loadBook("nce1");
+  </script>
+</body>
+</html>
