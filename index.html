@@ -356,6 +356,39 @@
     border-radius: 2px;
     transition: width .2s;
   }
+
+  /* 手机端：页头页脚悬浮，卡片相对整个屏幕居中 */
+  @media (max-width: 640px) {
+    header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      padding-top: max(10px, env(safe-area-inset-top));
+    }
+
+    header h1 { font-size: 16px; }
+
+    .books { padding-top: 8px; gap: 8px; }
+    .books button { padding: 8px 16px; font-size: 14px; }
+
+    .controls { padding-top: 8px; }
+
+    footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding-bottom: max(12px, env(safe-area-inset-bottom));
+    }
+
+    main { height: 100%; }
+
+    .card {
+      min-height: 260px;
+      max-height: 62vh;
+      padding: 28px 20px;
+    }
+  }
 </style>
 </head>
 <body>
